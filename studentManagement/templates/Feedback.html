@@ -1,0 +1,76 @@
+{% extends 'dashboard.html' %}
+{% block content %}
+
+<!-- Bootstrap 4 CSS (Include in dashboard.html if not already there) -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+<form action="{% url 'save_feedback' %}" method="post" class="p-4 shadow rounded bg-white" enctype="multipart/form-data">
+  <div class="text-end mb-3">
+    <!-- Feedback History Button -->
+    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#feedbackHistoryModal">
+      Feedback History
+    </button>
+  </div>
+
+  <!-- Feedback History Modal -->
+  <div class="modal fade" id="feedbackHistoryModal" tabindex="-1" role="dialog" aria-labelledby="feedbackHistoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="feedbackHistoryModalLabel">Feedback History</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <table class="table table-bordered">
+            <thead class="thead-dark">
+              <tr>
+                <th>#</th>
+                <th>Feedback</th>
+                <th>Reply</th>
+                <th>Status</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for feedback in feedback_history %}
+              <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ feedback.feedback }}</td>
+                <td>{{ feedback.feedback_reply }}</td>
+                <td>
+                  {% if feedback.status %}
+                  <span class="badge badge-success">Replied</span>
+                  {% else %}
+                  <span class="badge badge-secondary">Pending</span>
+                  {% endif %}
+                </td>
+                <td>{{ feedback.created_at }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% csrf_token %}
+  <div class="mb-3">
+    <label for="feedback" class="form-label">Feedback</label>
+    <textarea class="form-control" name="feedback" rows="8" required></textarea>
+  </div>
+  <div class="d-grid">
+    <button type="submit" class="btn btn-success">Send Feedback</button>
+  </div>
+</form>
+
+<!-- Bootstrap & jQuery Scripts (Add at bottom if not already in dashboard.html) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+{% endblock %}

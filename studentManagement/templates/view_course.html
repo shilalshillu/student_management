@@ -1,0 +1,87 @@
+{% extends 'dashboard.html' %}
+{% block content %}
+
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: Arial, sans-serif;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    .profile-pic {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 10px;
+    }
+
+    .name-cell {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .action-buttons button {
+      padding: 5px 10px;
+      margin: 0 2px;
+      cursor: pointer;
+    }
+
+    .edit-btn {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+    }
+
+    .delete-btn {
+      background-color: #f44336;
+      color: white;
+      border: none;
+    }
+  </style>
+
+
+<h2>View course</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>action</th>
+
+    </tr>
+  </thead>
+  <tbody>
+       {% for i in course %}
+   <tr>
+       <th scope="row">{{i.id}}</th>
+       <td>{{i.name}}</td>
+       <td>
+           <a href="{% url 'edit_course' i.id %}" class="btn btn-warning btn-sm">Edit</a>
+           <a href="{% url 'delete_course' i.id %}" class="btn btn-danger btn-sm">Delete</a>
+       </td>
+
+    </tr>
+        {% endfor %}
+
+  </tbody>
+</table>
+
+
+
+
+
+{% endblock %}

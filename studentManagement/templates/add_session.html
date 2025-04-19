@@ -1,0 +1,18 @@
+{% extends 'dashboard.html' %}
+{% block content %}
+
+
+<form method="POST" class="needs-validation" novalidate>
+    {% csrf_token %}
+<div class="mb-3">
+   <label for="session_year_start" class="form-label">Session Year Start</label>
+   <input id="session_year_start" name="session_year_start" type="date" class="form-control" required>
+</div>
+    <div class="mb-3">
+   <label for="session_year_end" class="form-label">Session Year End</label>
+   <input id="session_year_end" name="session_year_end" type="date" class="form-control" required>
+</div>
+  <button type="submit" class="btn btn-primary">Add session</button>
+</form>
+
+{% endblock %}

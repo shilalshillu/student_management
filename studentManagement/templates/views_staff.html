@@ -1,0 +1,95 @@
+{% extends 'dashboard.html' %}
+{% block content %}
+
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: Arial, sans-serif;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    .profile-pic {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 10px;
+    }
+
+    .name-cell {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .action-buttons button {
+      padding: 5px 10px;
+      margin: 0 2px;
+      cursor: pointer;
+    }
+
+    .edit-btn {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+    }
+
+    .delete-btn {
+      background-color: #f44336;
+      color: white;
+      border: none;
+    }
+  </style>
+
+
+<h2>View Staff</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Username</th>
+      <th>Address</th>
+      <th>Gender</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+         {% for i in views_staff %}
+   <tr>
+       <th>{{ i.id }}</th>
+       <td><span>{{ i.admin.first_name }} {{ i.admin.last_name }}</span></td>
+       <td>{{ i.admin.email }}</td>
+       <td>{{ i.admin.username }}</td>
+       <td>{{ i.address }}</td>
+       <td>{{ i.gender }}</td>
+
+       <td>
+           <a href="{% url 'edit_staff' i.id %}" class="btn btn-warning btn-sm">Edit</a>
+           <a href="{% url 'delete_staff' i.admin.id %}" class="btn btn-danger btn-sm">Delete</a>
+       </td>
+
+    </tr>
+        {% endfor %}
+
+  </tbody>
+</table>
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'dashboard.html' %}
+{% block content %}
+
+<h2 class="mb-4">Edit Subject</h2>
+
+<form method="POST" action="{% url 'update_subject' %}">
+    {% csrf_token %}
+
+    <div class="mb-3">
+        <label for="subject_name" class="form-label">Subject Name</label>
+        <input id="subject_name" name="subject_name" type="text" class="form-control" value="{{ subject.name }}" required>
+        <input id="subject_id" name="subject_id" type="hidden" value="{{ subject.id }}">
+    </div>
+
+    <div class="mb-3">
+        <label for="course" class="form-label">Course Name</label>
+        <select id="course" class="form-select" name="course_id" required>
+            <option value="">Select Course</option>
+            {% for i in course %}
+                <option value="{{ i.id }}" {% if i.id == subject.course.id %}selected{% endif %}>
+                    {{ i.name }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="staff" class="form-label">Staff</label>
+        <select id="staff" class="form-select" name="staff_id" required>
+            <option value="">Select Staff</option>
+            {% for i in staff %}
+                <option value="{{ i.id }}" {% if i.id == subject.staff.id %}selected{% endif %}>
+                    {{ i.admin.first_name }} {{ i.admin.last_name }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Update Subject</button>
+</form>
+
+{% endblock %}

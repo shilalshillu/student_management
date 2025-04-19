@@ -1,0 +1,68 @@
+{% extends 'dashboard.html' %}
+{% block content %}
+
+<h1>HELLO FROM FEEDBACK VIEW</h1>
+<div class="container mt-5">
+    <h2>Staff Feedback</h2>
+
+    <div class="text-right mb-3">
+        <a href="{% url 'staff_feedback_view' %}" class="btn btn-primary">View All Staff Feedback</a>
+    </div>
+
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>Staff Name</th>
+                <th>Feedback</th>
+                <th>Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for feedback in feedback_list %}
+            <tr>
+                <td>{{ feedback.id }}</td>
+                <td>{{ feedback.staff_id.admin.first_name }} {{ feedback.staff_id.admin.last_name }}</td>
+                <td>{{ feedback.feedback }}</td>
+                <td>{{ feedback.created_at }}</td>
+                <td>
+                    <!-- Button to trigger modal -->
+                 <!-- Button to trigger modal -->
+<button class="btn btn-success btn-sm" data-toggle="modal" data-target="#replyModal{{ feedback.id }}">Reply</button>
+
+<!-- Modal Structure -->
+<div class="modal fade" id="replyModal{{ feedback.id }}" tabindex="-1" role="dialog" aria-labelledby="replyModalLabel{{ feedback.id }}" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="replyModalLabel{{ feedback.id }}">Reply to Feedback</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+  <form method="post" action="{% url 'staff_feedback_view' %}">
+           {% csrf_token %}
+        <div class="modal-body">
+          <!-- Your reply form or content goes here -->
+          <textarea class="form-control" rows="5" placeholder="Type your reply here..."></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Send Reply</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+                     <!-- Modal -->
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

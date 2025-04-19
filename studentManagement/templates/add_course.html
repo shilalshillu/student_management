@@ -1,0 +1,20 @@
+{% extends 'dashboard.html' %}
+{% block content %}
+
+ <div class="container mt-5">
+        <h2 class="text-center">User Profile</h2>
+        <form method="post" action="{% url 'add_course' %}">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label for="course_name" class="form-label">course_name</label>
+                <input type="text" class="form-control" id="course_name" name="course_name" placeholder="Enter your course name">
+            </div>
+
+
+
+            <button type="submit" class="btn btn-primary w-100">add course</button>
+        </form>
+    </div>
+
+{% endblock %}

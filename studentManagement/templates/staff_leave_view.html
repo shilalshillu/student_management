@@ -1,0 +1,55 @@
+{% extends 'dashboard.html' %}
+{% block content %}
+
+{% for i in staff_leave %}
+  <div class="container mt-5">
+    <h3>Staff Leave</h3>
+    <div class="d-flex justify-content-between mb-2">
+      <div>Show
+        <select class="form-select d-inline w-auto mx-2" aria-label="entries">
+          <option selected>10</option>
+          <option value="25">25</option>
+          <option value="50">50</option>
+        </select> entries
+      </div>
+      <div>
+        <input type="search" class="form-control" placeholder="Search" style="width: 200px;">
+      </div>
+    </div>
+
+    <table class="table table-bordered">
+      <thead class="table-dark">
+        <tr>
+          <th>ID</th>
+          <th>Staff Name</th>
+          <th>Leave Date</th>
+          <th>Message</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">{{ i.id }}</th>
+          <td>{{ i.staff_id.admin.first_name }}</td>
+          <td>{{ i.data }}</td>
+          <td>{{ i.message}}</td>
+      <td>
+   {% if i.status == 0 %}
+   <a href="{% url 'staff_approve_leave' i.id %}"><button class="btn btn-success">Approve</button></a>
+   <a href="{% url 'staff_disapprove_leave' i.id %}"><button class="btn btn-danger">Disapprove</button></a>
+   {% elif i.status == 1 %}
+    <button class="btn btn-success" disabled="disabled">Approve</button>
+   {% else %}
+   <button class="btn btn-success" disabled="disabled">Dispprove</button>
+   {% endif %}
+</td>
+
+        </tr>
+      </tbody>
+    </table>
+  </div>
+{% endfor %}
+
+
+
+{% endblock %}
